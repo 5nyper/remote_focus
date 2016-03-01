@@ -6,6 +6,7 @@ const int set = 9;
 const int presetApin = 7;
 const int presetBpin = 6;
 const int presetCpin = 5;
+const int LEDpin = 3;
 const int reset = 4;
 
 bool toggle = false;
@@ -19,6 +20,7 @@ void setup() {
     pinMode(i, INPUT);
     digitalWrite(i, HIGH);
   }
+  pinMode(LEDpin, INPUT);
   focus.attach(8);
   Serial.begin(9600);
 }
@@ -28,6 +30,7 @@ void loop() {
     toggle = true;
     getPreset();
   }
+  digitalWrite(LEDpin, HIGH);
   int pot = analogRead(2);
   int angle = map(pot, 0, 1023, 0, 180);
   focus.write(angle);
@@ -45,6 +48,7 @@ void loop() {
 
 void getPreset() {
   delay(1000);
+  digitalWrite(LEDpin, LOW);
   while(toggle == true) {
     if (digitalRead(presetApin) == LOW) {
       focus.write(presetA);
@@ -58,6 +62,7 @@ void getPreset() {
     if (digitalRead(reset) == LOW) {
       toggle = false;
       delay(1000);
+      digitalWrite(LEDpin, HIGH);
       break;
     }
   }
