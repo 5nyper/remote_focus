@@ -12,4 +12,4 @@ A simple wireless controller for adjusting the focus of a camera on 3 predetermi
 - [x] hook up buttons
 - [x] add controller logic for presets and mode switching between potentiometer and presets
 - [ ] add external gearing for more rotation
-- [ ] use wireless transisters
+- [ ] use wireless transistors
