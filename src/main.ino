@@ -20,7 +20,7 @@ void setup() {
     pinMode(i, INPUT);
     digitalWrite(i, HIGH);
   }
-  pinMode(LEDpin, INPUT);
+  pinMode(LEDpin, OUTPUT);
   focus.attach(8);
   Serial.begin(9600);
 }
