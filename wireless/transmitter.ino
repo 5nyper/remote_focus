@@ -32,10 +32,9 @@ void loop() {
   digitalWrite(LEDpin, HIGH);
   int pot = analogRead(2);
   int angle = map(pot, 0, 1023, 0, 180);
-  vw_send((uint8_t *)angle, 1);
+  vw_send((uint8_t *)&angle, sizeof(angle));
   vw_wait_tx(); // Wait until the whole message is gone
-  Serial.println(angle);
-  //focus.write(angle);
+  Serial.println(foo);
   if (digitalRead(set) == LOW && digitalRead(presetApin) == LOW) {
     presetA = angle;
   }
