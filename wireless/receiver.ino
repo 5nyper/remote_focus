@@ -15,8 +15,8 @@ void loop() {
   uint8_t buflen = VW_MAX_MESSAGE_LEN;
 
   if (vw_get_message(buf, &buflen)) {
-    int value = map(buf[0], 0, 180, 0, 2000);
+    int value = map(buf[0], 0, 180, 500, 2500);
     Serial.println(value);
-    //focus.write(value);
+    focus.write(value);
   }
 }
