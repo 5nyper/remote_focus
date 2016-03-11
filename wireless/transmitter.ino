@@ -20,7 +20,7 @@ void setup() {
   }
   pinMode(LEDpin, OUTPUT);
   vw_set_tx_pin(11);
-  vw_setup(2000);
+  vw_setup(4000);
   Serial.begin(9600);
 }
 
@@ -33,8 +33,7 @@ void loop() {
   int pot = analogRead(2);
   int angle = map(pot, 0, 1023, 0, 180);
   vw_send((uint8_t *)&angle, sizeof(angle));
-  vw_wait_tx(); // Wait until the whole message is gone
-  Serial.println(foo);
+  vw_wait_tx();
   if (digitalRead(set) == LOW && digitalRead(presetApin) == LOW) {
     presetA = angle;
   }
@@ -52,13 +51,16 @@ void getPreset() {
   digitalWrite(LEDpin, LOW);
   while(toggle == true) {
     if (digitalRead(presetApin) == LOW) {
-      //focus.write(presetA);
+      vw_send((uint8_t *)&presetA, sizeof(presetA));
+      vw_wait_tx();
     }
     else if (digitalRead(presetBpin) == LOW) {
-      //focus.write(presetB);
+      vw_send((uint8_t *)&presetB, sizeof(presetB));
+      vw_wait_tx();
     }
     else if (digitalRead(presetCpin) == LOW) {
-      //focus.write(presetC);
+      vw_send((uint8_t *)&presetC, sizeof(presetC));
+      vw_wait_tx();
     }
     if (digitalRead(reset) == LOW) {
       toggle = false;
