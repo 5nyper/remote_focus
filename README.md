@@ -13,3 +13,4 @@ A simple wireless controller for adjusting the focus of a camera on 3 predetermi
 - [x] add controller logic for presets and mode switching between potentiometer and presets
 - [ ] add external gearing for more rotation
 - [x] use wireless transistors
+- [ ] figure out how to control speed of servo  <b>NOTE: No need for another potentiometer to set speed!
