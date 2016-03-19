@@ -69,7 +69,7 @@ void getPreset() {
     else if (digitalRead(presetCpin) == LOW) {
       vw_send((uint8_t *)&presetC, sizeof(presetC));
       vw_wait_tx();
-    }t 
+    }
     if (digitalRead(reset) == LOW) {
       toggle = false;
       vw_send((uint8_t *)&end, sizeof(end));
