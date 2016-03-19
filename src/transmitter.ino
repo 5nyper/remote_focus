@@ -8,6 +8,8 @@ const int LEDpin = 3;
 const int reset = 4;
 
 bool toggle = false;
+int start = 200;
+int end = 201;
 
 int presetA,presetB,presetC;
 
@@ -27,11 +29,13 @@ void setup() {
 void loop() {
   if (digitalRead(reset) == LOW) {
     toggle = true;
+    vw_send((uint8_t *)&start, sizeof(start));
+    vw_wait_tx();
     getPreset();
   }
   digitalWrite(LEDpin, HIGH);
   int pot = analogRead(2);
-  int angle = map(pot, 0, 1023, 0, 180);
+  int angle = map(pot, 0, 1023, 10, 190);
   vw_send((uint8_t *)&angle, sizeof(angle));
   vw_wait_tx();
   if (digitalRead(set) == LOW && digitalRead(presetApin) == LOW) {
@@ -50,6 +54,10 @@ void getPreset() {
   delay(1000);
   digitalWrite(LEDpin, LOW);
   while(toggle == true) {
+    int pot = analogRead(2);
+    int angle = map(pot, 0, 1023, 0, 10);
+    vw_send((uint8_t *)&angle, sizeof(angle));
+    vw_wait_tx();
     if (digitalRead(presetApin) == LOW) {
       vw_send((uint8_t *)&presetA, sizeof(presetA));
       vw_wait_tx();
@@ -61,9 +69,11 @@ void getPreset() {
     else if (digitalRead(presetCpin) == LOW) {
       vw_send((uint8_t *)&presetC, sizeof(presetC));
       vw_wait_tx();
-    }
+    }t 
     if (digitalRead(reset) == LOW) {
       toggle = false;
+      vw_send((uint8_t *)&end, sizeof(end));
+      vw_wait_tx();
       delay(1000);
       digitalWrite(LEDpin, HIGH);
       break;
