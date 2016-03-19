@@ -38,20 +38,20 @@ void presetMode() {
     uint8_t buflen = VW_MAX_MESSAGE_LEN;
   
     if (vw_get_message(buf, &buflen)) {
+       if (buf[0] == 201) {
+        toggle = false;
+        delay(1000);
+        break;
+      }
       if (buf[0] <= 10) {
-        spe = buf[0];
+        spe = map(buf[0], 0, 10, 1, 100);
         Serial.print("spe: ");
         Serial.println(spe);
       }
       else {
         int value = map(buf[0], 10, 190, 500, 2500);
-          Serial.println(value);
-          speed(value, spe);
-      }
-      if (buf[0] == 201) {
-        toggle = false;
-        delay(1000);
-        break;
+        Serial.println(value);
+        speed(value, spe);
       }
     }
   }
